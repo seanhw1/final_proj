@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Assignment 3</title>
+    <meta charset="utf-8">
+    <style>
+      body{
+        background-color: #DCDCDC;
+        text-align: center;
+      }
+
+      h1{
+        font-family: Helvetica;
+        font-size: 45px;
+      }
+
+      #instructions{
+        margin:auto;
+        width: 650px;
+        height: 70px;
+        background-color: yellow;
+        opacity: 90%;
+				border-radius: 25px;
+        padding: 15px;
+        font-family: Helvetica;
+        font-size: 15px;
+        border: 3px solid black;
+      }
+
+      #moneyLeft{
+        margin: auto;
+        position: relative;
+        top: 25px;
+        width: 80px;
+        height: 18px;
+        background-color: yellow;
+        opacity: 90%;
+				border-radius: 10px;
+        padding: 5px;
+        border: 3px solid black;
+      }
+
+      .cup{
+        position: relative;
+        top: 80px;
+        z-index: 1;
+        opacity:1;
+      }
+
+      #cup1{
+        position: absolute;
+        top:345px;
+        left:423px;
+      }
+
+      #cup2{
+        position: absolute;
+        top:345px;
+        left:623px;
+      }
+
+      #cup3{
+        position: absolute;
+        top:345px;
+        left:823px;
+      }
+
+      #coin{
+        position: absolute;
+      }
+
+      .left{
+        top:480px;
+        left:475px;
+      }
+
+      .center{
+        top:480px;
+        left:675px;
+      }
+
+      .right{
+        top:480px;
+        left:875px;
+      }
+
+      button{
+        position: absolute;
+        top: 665px;
+        left:674px;
+        width:100px;
+        height: 30px;
+        border-radius: 10px;
+        font-family: Helvetica;
+        font-weight: bold;
+      }
+
+      .hidden{
+        display: none;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+    <h1 id="header">Find the Coin!</h1>
+
+    <p id="instructions">
+      Select a cup below by clicking on it - when you do, you will either find a coin or nothing. If you find a coin you will earn $5, and if you find nothing you will lose $5. The game will continue as long as you have money in your bank to play another round. Good luck!
+    </p>
+
+    <p id="moneyLeft"> $50 </p>
+
+    <img id="cup1" class="cup" src="cup.png">
+    <img id="cup2" class="cup" src="cup.png">
+    <img id="cup3" class="cup" src="cup.png">
+
+    <img id="coin" src="prize.png">
+
+    <button id="button" class="hidden" onclick="clicked()">Play Again</button>
+
+
+    <script>
+
+      var cup1 = document.getElementById('cup1');
+      var cup2 = document.getElementById('cup2');
+      var cup3 = document.getElementById('cup3');
+
+
+      var playAgain = document.getElementById('button');
+
+
+      var cupsClicked = false;
+
+      var bank = 50;
+      var randNum = parseInt(Math.random() * 3);
+
+      function run(){
+
+        randNum = parseInt(Math.random() * 3);
+        coin.classList.remove('left');
+        coin.classList.remove('center');
+        coin.classList.remove('right');
+        if (randNum == 0){
+          coin.classList.add('left');
+        }
+        else if (randNum == 1){
+          coin.classList.add('center');
+        }
+        else if (randNum ==2 ){
+          coin.classList.add('right');
+        }
+      }
+      run();
+
+
+      console.log(randNum);
+
+        cup1.onclick = function clicked(){
+          if (cupsClicked == true) {
+            return;
+          }
+          cup1.classList.add('hidden');
+          cup2.style.opacity = '0.5';
+          cup3.style.opacity = '0.5';
+          if (randNum == 0){
+            bank += 5;
+          }
+          else {
+            console.log("randNum: " + randNum);
+            console.log("cup1 randNum else");
+            bank -= 5;
+          if (bank == 0){
+            document.getElementById('moneyLeft').innerHTML = 'Game Over';
+            cupsClicked == true;
+            return;
+            }
+          }
+          document.getElementById('moneyLeft').innerHTML = '$'+bank;
+          button.classList.remove('hidden');
+          cupsClicked = true;
+
+        }
+
+      cup2.onclick = function clicked(){
+        if (cupsClicked == true){
+          return;
+        }
+        cup2.classList.add('hidden');
+        cup1.style.opacity = '0.5';
+        cup3.style.opacity = '0.5';
+        if (randNum == 1){
+          bank += 5;
+        }
+        else {
+          bank -= 5;
+        }
+        if (bank == 0){
+          document.getElementById('moneyLeft').innerHTML = 'Game Over';
+          cupsClicked= true;
+          return;
+          }
+        document.getElementById('moneyLeft').innerHTML = '$'+bank;
+        button.classList.remove('hidden');
+        cupsClicked = true;
+
+
+      }
+
+      cup3.onclick = function clicked(){
+        if (cupsClicked == true){
+          return;
+        }
+        cup3.classList.add('hidden');
+        cup1.style.opacity = '0.5';
+        cup2.style.opacity = '0.5';
+        if (randNum == 2){
+          bank += 5;
+        }
+        else {
+          bank -= 5;
+        }
+        if (bank == 0){
+          document.getElementById('moneyLeft').innerHTML = 'Game Over';
+          cupsClicked = true;
+          return;
+          }
+        document.getElementById('moneyLeft').innerHTML = '$'+bank;
+        button.classList.remove('hidden');
+        cupsClicked = true;
+        console.log('cup3');
+      }
+
+      console.log(randNum);
+
+
+
+
+
+      playAgain.onclick = function clicked(){
+        cupsClicked = false;
+        cup1.classList.remove('hidden');
+        cup2.classList.remove('hidden');
+        cup3.classList.remove('hidden');
+        cup1.style.opacity = '1';
+        cup2.style.opacity = '1';
+        cup3.style.opacity = '1';
+        button.classList.add('hidden');
+
+        run();
+
+      }
+
+
+
+    </script>
+  </body>
+</html>
